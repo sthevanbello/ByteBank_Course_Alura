@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ByteBank_Examples_Alura_POO.Entities;
+using System;
 
 namespace ByteBank_Examples_Alura_POO
 {
@@ -6,28 +7,21 @@ namespace ByteBank_Examples_Alura_POO
     {
         static void Main(string[] args)
         {
+            Client client1 = new Client();
 
-            Account acc1 = new Account() { Holder = "Léo" };
-            acc1.Balance += 150;
-            Console.WriteLine($"Balance: {acc1.Balance:C}");
+            client1.Name = "Gabriel";
+            client1.Occupation = "Developer";
+            client1.Cpf = "228753654-15";
 
-            bool withdraw = acc1.Withdraw(250);
-            
-            if (withdraw)
-            {
-            Console.WriteLine($"Balance after withdraw: {acc1.Balance:C}");
-            }
+            Account acc1 = new Account();
 
-            acc1.Deposit(500);
+            acc1.Holder = client1;
+            acc1.Balance = 500;
+            acc1.Agency = 563;
+            acc1.Number = 5634527;
 
-            Console.WriteLine($"Balance after deposit: {acc1.Balance:C}");
-
-            Account acc2 = new Account() {Holder = "Gabriel" };
-
-            acc1.Transfer(350, acc2);
-            Console.WriteLine($"\nDeposit of the $350.00 of the {acc1.Holder} to {acc2.Holder}");
-            Console.WriteLine($"\nBalance Account to: {acc1.Holder} = {acc1.Balance:C}");
-            Console.WriteLine($"Balance Account to: {acc2.Holder} = {acc2.Balance:C}");
+            Console.WriteLine($"Name of the client: {client1.Name}");
+            Console.WriteLine($"Name of the client of the Account class: {acc1.Holder.Name}");
 
             Console.ReadKey();
         }

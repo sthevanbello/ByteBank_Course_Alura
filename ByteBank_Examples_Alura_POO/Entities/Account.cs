@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ByteBank_Examples_Alura_POO
+namespace ByteBank_Examples_Alura_POO.Entities
+
 {
     class Account
     {
-        public string Holder { get; set; }
+        public Client Holder { get; set; }
         public int Agency { get; set; }
         public int Number { get; set; }
 
