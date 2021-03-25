@@ -24,7 +24,11 @@ namespace ByteBank_Examples_Alura_POO.Entities
             } 
         }
 
-
-
+        public Client(string name, string occupation, string cpf)
+        {
+            Name = name;
+            Occupation = occupation;
+            Cpf = cpf;
+        }
     }
 }

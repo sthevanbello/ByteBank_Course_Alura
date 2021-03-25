@@ -14,6 +14,8 @@ namespace ByteBank_Examples_Alura_POO.Entities
         public uint Number { get; set; }
 
         private double _balance = 100;
+        public static int _countAccount { get; private set; }
+
 
         // public double Balance { get; set; }
 
@@ -29,7 +31,7 @@ namespace ByteBank_Examples_Alura_POO.Entities
                 {
                     return;
                 }
-                _balance = value;
+                _balance += value;
             }
         }
 
@@ -39,12 +41,10 @@ namespace ByteBank_Examples_Alura_POO.Entities
             Agency = agency;
             Number = number;
             Balance = balance;
+            _countAccount++;
         }
 
-        public Account()
-        {
-            // Balance = 100;
-        }
+        
 
         public double GetBalance()
         {

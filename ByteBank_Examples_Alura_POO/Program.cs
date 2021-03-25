@@ -56,12 +56,14 @@ namespace ByteBank_Examples_Alura_POO
             #endregion
 
             #region Lesson 7
+            Client client1 = new Client(name: "Gabriel", occupation: "Developer", cpf: "228753654-15");
+            Client client2 = new Client(name: "Léo", occupation: "Study", cpf: "229854159-04");
 
-            Account account = new Account();
+            Account account1 = new Account(client1, agency: 86712540, number: 876, balance: 0);
+            Account account2 = new Account(client2, agency: 86712400, number: 876, balance: 500);
 
-            account.Number = 86712540;
-            account.Agency = 876; 
 
+            Console.WriteLine($"Total of account: {Account._countAccount}");
 
 
             #endregion
