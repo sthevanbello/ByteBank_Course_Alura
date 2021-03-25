@@ -10,37 +10,79 @@ namespace ByteBank_Examples_Alura_POO.Entities
     class Account
     {
         public Client Holder { get; set; }
-        public int Agency { get; set; }
-        public int Number { get; set; }
+        public uint Agency { get; set; }
+        public uint Number { get; set; }
 
-        public double Balance = 100;
+        private double _balance = 100;
 
+        // public double Balance { get; set; }
 
+        public double Balance
+        {
+            get
+            {
+                return _balance;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    return;
+                }
+                _balance = value;
+            }
+        }
 
+        public Account(Client holder, uint agency, uint number, double balance)
+        {
+            Holder = holder;
+            Agency = agency;
+            Number = number;
+            Balance = balance;
+        }
+
+        public Account()
+        {
+            // Balance = 100;
+        }
+
+        public double GetBalance()
+        {
+            return Balance;
+        }
+
+        public void SetBalance(double value)
+        {
+            if (value < 0)
+            {
+                return;
+            }
+            _balance += value;
+        }
         public bool Withdraw(double value)
         {
-            if (Balance < value)
+            if (_balance < value)
             {
                 return false;
             }
-            Balance -= value;
+            _balance -= value;
             return true;
         }
 
 
         public void Deposit(double value)
         {
-            Balance += value;
+            _balance += value;
         }
 
         public bool Transfer(double value, Account accDesnity)
         {
-            if (Balance < value)
+            if (_balance < value)
             {
                 return false;
             }
 
-            Balance -= value;
+            _balance -= value;
             accDesnity.Deposit(value);
             return true;
         }
