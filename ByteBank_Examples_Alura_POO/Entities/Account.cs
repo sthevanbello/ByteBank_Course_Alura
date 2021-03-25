@@ -15,6 +15,8 @@ namespace ByteBank_Examples_Alura_POO.Entities
 
         public double Balance = 100;
 
+
+
         public bool Withdraw(double value)
         {
             if (Balance < value)
