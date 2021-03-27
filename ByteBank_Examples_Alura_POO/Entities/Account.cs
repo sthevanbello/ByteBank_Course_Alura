@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ByteBank_Examples_Alura_POO.Entities.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,16 +10,37 @@ namespace ByteBank_Examples_Alura_POO.Entities
 {
     class Account
     {
+        public static double OperationTax { get; private set; }
         public Client Holder { get; set; }
-        public uint Agency { get; set; }
-        public uint Number { get; set; }
+        public static int CountAccount { get; private set; }
 
         private double _balance = 100;
-        public static int _countAccount { get; private set; }
+        public int AccountNumber { get; }
+        public int AgencyNumber { get; }
 
+        public Account()
+        {
+        }
 
-        // public double Balance { get; set; }
+        public Account(Client holder, int agencyNumber, int accountNumber, double balance)
+        {
+            Holder = holder;
+            AgencyNumber = agencyNumber;
+            AccountNumber = accountNumber;
+            Balance = balance;
+            CountAccount++;
+            OperationTax = 30 / CountAccount;
 
+            if (agencyNumber <= 0)
+            {
+                throw new ArgumentException("Agency number must be greater than zero", nameof(agencyNumber));
+            }
+            if (accountNumber <= 0)
+            {
+                throw new ArgumentException("Account number must be greater than zero", nameof(accountNumber));
+            }
+
+        }
         public double Balance
         {
             get
@@ -35,16 +57,6 @@ namespace ByteBank_Examples_Alura_POO.Entities
             }
         }
 
-        public Account(Client holder, uint agency, uint number, double balance)
-        {
-            Holder = holder;
-            Agency = agency;
-            Number = number;
-            Balance = balance;
-            _countAccount++;
-        }
-
-        
 
         public double GetBalance()
         {
@@ -59,14 +71,18 @@ namespace ByteBank_Examples_Alura_POO.Entities
             }
             _balance += value;
         }
-        public bool Withdraw(double value)
+        public void Withdraw(double value)
         {
+            if (value < 0)
+            {
+                throw new ArgumentException("Invalid value for withdraw: ", nameof(value));
+            }
+
             if (_balance < value)
             {
-                return false;
+                throw new BalanceException(_balance, value);
             }
             _balance -= value;
-            return true;
         }
 
 
@@ -75,16 +91,14 @@ namespace ByteBank_Examples_Alura_POO.Entities
             _balance += value;
         }
 
-        public bool Transfer(double value, Account accDesnity)
+        public void Transfer(double value, Account accDesnity)
         {
-            if (_balance < value)
+            if (value < 0)
             {
-                return false;
+                throw new ArgumentException("Invalid value for transfer: ", nameof(value));
             }
-
-            _balance -= value;
+            Withdraw(value);
             accDesnity.Deposit(value);
-            return true;
         }
     }
 }
