@@ -13,6 +13,8 @@ namespace ByteBank_Examples_Alura_POO.Entities
         public static double OperationTax { get; private set; }
         public Client Holder { get; set; }
         public static int CountAccount { get; private set; }
+        public int _countWithdrawDenied { get; private set; }
+        public int _countTransferDenied { get; private set; }
 
         private double _balance = 100;
         public int AccountNumber { get; }
@@ -80,7 +82,8 @@ namespace ByteBank_Examples_Alura_POO.Entities
 
             if (_balance < value)
             {
-                throw new BalanceException(_balance, value);
+                _countWithdrawDenied++;
+                throw new BalanceInsufficientException(_balance, value);
             }
             _balance -= value;
         }
@@ -97,8 +100,17 @@ namespace ByteBank_Examples_Alura_POO.Entities
             {
                 throw new ArgumentException("Invalid value for transfer: ", nameof(value));
             }
-            Withdraw(value);
-            accDesnity.Deposit(value);
+            try
+            {
+                Withdraw(value);
+                accDesnity.Deposit(value);
+            }
+            catch (BalanceInsufficientException ex)
+            {
+                _countTransferDenied++;
+                throw new FinancialOperationException("Operation cannot be performed", ex);
+            }
+
         }
     }
 }
